@@ -1,6 +1,7 @@
 package b;
 
 import shared.Patient;
+import shared.PatientThread;
 
 public class Main {
 
@@ -10,8 +11,8 @@ public class Main {
         Patient mueller = new Patient("Mueller", 1, 3);
         Patient mayer = new Patient("Mayer", 2, 4);
         Patient holger = new Patient("Holger", 1, 5);
-        Patient horst = new Patient("Horst", 1, 6);
-        Patient schulze = new Patient("Schulze", 2, 7);
+        Patient horst = new Patient("Horst", 2, 6);
+        Patient schulze = new Patient("Schulze", 1, 7);
         Patient hans = new Patient("Hans", 2, 8);
 
         PatientThread t1 = new PatientThread(mueller, practice);
