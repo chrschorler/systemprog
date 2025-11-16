@@ -7,7 +7,6 @@ public class ThreadImpl extends Thread {
     public ThreadImpl(Hilfszahl hilfszahl, String name) {
         super(name);
         this.hilfszahl = hilfszahl;
-
     }
 
     @Override
@@ -18,7 +17,7 @@ public class ThreadImpl extends Thread {
 
         int neuerWert = alterWert + 1;
 
-        // sleep erzwingt parallele Ausführung
+        // Sleep erzwingt parallele Ausführung
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {

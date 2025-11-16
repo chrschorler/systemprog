@@ -24,5 +24,4 @@ public class Main {
         System.out.println("Erwartet: 3");
         System.out.println("--> synchronized verhindert gleichzeitigen Zugriff");
     }
-
 }

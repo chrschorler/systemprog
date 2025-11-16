@@ -18,7 +18,7 @@ public class ThreadImpl extends Thread {
 
             int neuerWert = alterWert + 1;
 
-            // sleep erzwingt parallele Ausführung
+            // Sleep erzwingt parallele Ausführung
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
@@ -29,6 +29,5 @@ public class ThreadImpl extends Thread {
             hilfszahl.setZaehlerWert(neuerWert);
             System.out.println(this.getName() + " schreibt Wert: " + neuerWert);
         }
-
     }
 }

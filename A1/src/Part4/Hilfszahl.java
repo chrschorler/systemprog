@@ -19,7 +19,8 @@ public class Hilfszahl {
         int neuerWert = alterWert + 1;
 
         try {
-            Thread.sleep(100); // Verzögerung
+            // Sleep erzwingt parallele Ausführung
+            Thread.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
