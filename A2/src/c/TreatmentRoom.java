@@ -3,6 +3,7 @@ package c;
 import shared.Patient;
 
 public class TreatmentRoom {
+
     private int roomNumber;
     private Semaphore semaphore;
 

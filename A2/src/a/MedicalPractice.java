@@ -3,6 +3,7 @@ package a;
 import shared.Patient;
 
 public class MedicalPractice {
+
     private TreatmentRoom[] rooms;
 
     public MedicalPractice(int numberOfRooms) {

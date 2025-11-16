@@ -3,6 +3,7 @@ package c;
 import shared.Patient;
 
 public class PatientThread extends Thread {
+
     private Patient patient;
     private MedicalPractice practice;
 
