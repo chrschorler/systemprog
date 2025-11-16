@@ -1,7 +1,5 @@
 package shared;
 
-import b.MedicalPractice;
-
 public class PatientThread extends Thread {
 
     private Patient patient;
