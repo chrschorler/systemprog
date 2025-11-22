@@ -1,11 +1,12 @@
-package shared;
+package a;
+import shared.Patient;
 
 public class PatientThread extends Thread {
 
     private Patient patient;
-    private IMedicalPractice practice;
+    private MedicalPractice practice;
 
-    public PatientThread(Patient patient, IMedicalPractice practice) {
+    public PatientThread(Patient patient, MedicalPractice practice) {
         this.patient = patient;
         this.practice = practice;
     }

@@ -19,6 +19,7 @@ public class TreatmentRoom {
 
     public void startTreatment(Patient patient) {
         semaphore.p(); // acquire the semaphore
+
         try {
             patient.setTreatmentStart(System.currentTimeMillis());
             System.out.println("START >>> " + "ROOM " + roomNumber + " >>> Treatment of " + patient.getName() + " in Room " + roomNumber +

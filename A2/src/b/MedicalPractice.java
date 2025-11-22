@@ -1,9 +1,8 @@
 package b;
 
-import shared.IMedicalPractice;
 import shared.Patient;
 
-public class MedicalPractice implements IMedicalPractice {
+public class MedicalPractice {
 
     private TreatmentRoom[] rooms;
 
@@ -14,7 +13,6 @@ public class MedicalPractice implements IMedicalPractice {
         }
     }
 
-    @Override
     public void treatPatient(Patient patient) {
         TreatmentRoom room = rooms[patient.getTreatmentRoom() - 1];
         room.registerPatient(patient);
