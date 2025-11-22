@@ -15,7 +15,7 @@ public class TreatmentRoom {
         patient.setAdmissionTime(System.currentTimeMillis());
     }
 
-    public void startTreatment(Patient patient) {
+    public synchronized void startTreatment(Patient patient) {
         patient.setTreatmentStart(System.currentTimeMillis());
         System.out.println("START >>> " + "Zimmer " + roomNumber + " >>> Behandlung von " + patient.getName() + " in Zimmer " + roomNumber +
                 " gestarted. Behandlungszeit " + patient.getTreatmentDuration() + " Sekunden.");

@@ -7,7 +7,8 @@ public class PatientThread extends Thread {
     private Patient patient;
     private MedicalPractice practice;
 
-    public PatientThread(Patient patient, MedicalPractice practice) {
+    public PatientThread(String name, Patient patient, MedicalPractice practice) {
+        super(name);
         this.patient = patient;
         this.practice = practice;
     }
