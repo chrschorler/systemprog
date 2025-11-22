@@ -13,7 +13,7 @@ public class TreatmentRoom {
     }
 
     public void registerPatient(Patient patient) {
-        System.out.println(patient.getName() + "  Wartet auf Behandlung in Zimmer " + roomNumber);
+        System.out.println(patient.getName() + " wartet auf Behandlung in Zimmer " + roomNumber + ".");
         patient.setAdmissionTime(System.currentTimeMillis());
     }
 
@@ -22,12 +22,12 @@ public class TreatmentRoom {
 
         try {
             patient.setTreatmentStart(System.currentTimeMillis());
-            System.out.println("START >>> " + "Zimmer " + roomNumber + " >>> Behandlung von " + patient.getName() + " in Zimmer " + roomNumber +
+            System.out.println("Behandlung von " + patient.getName() + " in Zimmer " + roomNumber +
                     " gestarted. Behandlungszeit " + patient.getTreatmentDuration() + " Sekunden.");
 
             Thread.sleep(patient.getTreatmentDuration() * 1000L);
 
-            System.out.println("ENDE  >>> " + "Zimmer "  + roomNumber + " >>> Patient " + patient.getName() + " hatte eine Wartezeit von " +
+            System.out.println("Patient " + patient.getName() + " hatte eine Wartezeit von " +
                     patient.getWaitingTime() + " Sekunden.");
         } catch (InterruptedException e) {
             e.printStackTrace();
