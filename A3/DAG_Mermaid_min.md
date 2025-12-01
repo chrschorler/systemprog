@@ -11,11 +11,11 @@ graph TD
  subgraph "P2"
      G["g = d * 3"]
      H["h = d * 5"]
+     U["u = y * z"]
  end
 
  subgraph "P3"
      I["i = g * h"]
-     U["u = y * z"]
  end
 
  subgraph "P4"
