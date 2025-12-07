@@ -2,18 +2,19 @@ package join;
 
 public class MultiplyThread extends Thread {
 
-    private double operand1;
-    private double operand2;
-    private double operand3 = 1.0;
-    private double result;
+    private int operand1;
+    private int operand2;
+    private int operand3 = 1;
+    private int result;
 
-    public MultiplyThread(String name, double operand1, double operand2) {
+    public MultiplyThread(String name, int operand1, int operand2) {
         super(name);
         this.operand1 = operand1;
         this.operand2 = operand2;
     }
 
-    public MultiplyThread(String name, double operand1, double operand2, double operand3) {
+    public MultiplyThread(String name, int operand1, int operand2,
+                          int operand3) {
         super(name);
         this.operand1 = operand1;
         this.operand2 = operand2;
@@ -22,20 +23,19 @@ public class MultiplyThread extends Thread {
 
     @Override
     public void run() {
-        // simulate workload
-        System.out.println("Thread " + getName() + " gestartet.");
-
+        System.out.println("Starte Berechnung für " + this.getName() + ": "
+                + operand1 + " * " + operand2 + (operand3 == 1 ? "" : " * " + operand3));
         try {
-            Thread.sleep((long) (Math.random() * 5000));
+            // simulate workload (1-3 sec)
+            Thread.sleep((long) (Math.random() * 2000 + 1000));
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
         result = operand1 * operand2 * operand3;
-        System.out.println("Thread " + this.getName() + " fertig. Ergebnis: " + (int)result);
+        System.out.println(this.getName() + " berechnet: " + result);
     }
 
-    public double getResult() {
+    public int getResult() {
         return result;
     }
 }

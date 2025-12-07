@@ -22,8 +22,8 @@ public class Main {
 
         Thread_i i = new Thread_i("i", g, h, s2, s3);
 
-        Thread_vu v = new Thread_vu("v", a, i, s3);
-        Thread_vu u = new Thread_vu("u", y, z, s4);
+        Thread_u u = new Thread_u("u", y, z, s4);
+        Thread_v v = new Thread_v("v", a, i, s3);
 
         Thread[] threads = {a, y, z, d, g, h, i, v, u};
         for (Thread t : threads) t.start();
@@ -31,9 +31,8 @@ public class Main {
         try {
             v.join();
             u.join();
-            System.out.println("Starte Berechnung für c");
+            System.out.println("Starte Berechnung für c: " + v.getResult() + " / " + u.getResult());
             int c = v.getResult() / u.getResult();
-
             System.out.println("Ergebnis für c: " + c);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
