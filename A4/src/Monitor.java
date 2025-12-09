@@ -72,22 +72,22 @@ public class Monitor {
                 ausgangWarten.release();
                 iws2Wartend++;
                 // die 3 sachen sind wecken -> öfter gebraucht
-            } else {
-                if (eingangWartend > 0) {
-                    int zuWecken = eingangWartend;
-                    if (zuWecken > 3 ) zuWecken = 3;
-                    for (int i = 0; i < zuWecken; i++) {
-                        eingangWartend--;
-                        eingangWarten.release();
-                        iws2Wartend++;
-                    }
-                } else {
-                    if (anfrageWartend > 0 && ausgangWartend == 0) {
-                        // anfrage starten gkeiches Schema
-
-                    }
+            } else if (eingangWartend > 0) {
+                int zuWecken = eingangWartend;
+                if (zuWecken > 3 ) zuWecken = 3;
+                for (int i = 0; i < zuWecken; i++) {
+                    eingangWartend--;
+                    eingangWarten.release();
+                    iws2Wartend++;
                 }
             }
+        } else {
+            if (anfrageWartend > 0 && ausgangWartend == 0) {
+                // anfrage starten gkeiches Schema
+                anfrageWartend--;
+                anfrageWarten.release();
+                iws2Wartend++;
+                }
         }
         belegeMonitor();
     }
