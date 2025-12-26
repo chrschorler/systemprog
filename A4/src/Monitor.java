@@ -38,6 +38,8 @@ public class Monitor {
     // eine Zeile mit den variablen wie viele wartend sind
     // und das zu begin von belege Monitor
     private void belegeMonitor() {
+        System.out.println("Aktiv:  Ausgänge: " + ausgangAktiv + " Eingänge: " + eingangAktiv + " Anfragen: " + anfrageAktiv);
+        System.out.println("Wartend: Ausgänge: " + ausgangWartend + " Eingänge: " + eingangWartend + " Anfragen: " + anfrageWartend);
         if(iws2Wartend > 0) {
             // hat vorrang
             iws2Wartend--;
@@ -50,7 +52,7 @@ public class Monitor {
 
     public void anfrageAnfang() throws InterruptedException {
         betreteMonitor();
-        if (ausgangAktiv > 0 || eingangAktiv > 0 || anfrageAktiv == 5 || ausgangAktiv > 0) {
+        if (ausgangAktiv > 0 || eingangAktiv > 0 || anfrageAktiv == 5 || ausgangWartend > 0) {
             // dann warten weil nur eine davon stattfinden darf?
             anfrageWartend++;
             belegeMonitor();
@@ -58,7 +60,7 @@ public class Monitor {
             iws2.acquire();
         }
 
-        ausgangAktiv++;
+        anfrageAktiv++;
         belegeMonitor();
     }
 
@@ -81,13 +83,12 @@ public class Monitor {
                     iws2Wartend++;
                 }
             }
-        } else {
-            if (anfrageWartend > 0 && ausgangWartend == 0) {
+        } else if (anfrageWartend > 0 && ausgangWartend == 0) {
                 // anfrage starten gkeiches Schema
                 anfrageWartend--;
                 anfrageWarten.release();
                 iws2Wartend++;
-                }
+
         }
         belegeMonitor();
     }
@@ -96,6 +97,91 @@ public class Monitor {
 
     // Ausgang ist maximal 1, wenn man 1 abzieht braucht man maximal auf 0 prüfen, folglich nur den oberen Teil
     // wenn ausgang wartet ausgang wecken, wenn anfrage max 5 warten, wenn eingang warten max 3 wecken, das gleich 0 entfällt.
+    public void ausgangAnfang() throws InterruptedException {
+        betreteMonitor();
+        if (ausgangAktiv > 0 || eingangAktiv > 0 || anfrageAktiv > 0) {
+            ausgangWartend++;
+            belegeMonitor();
+            ausgangWarten.acquire();
+            iws2.acquire();
+        }
+        ausgangAktiv++;
+        belegeMonitor();
+    }
+
+    public void ausgangEnde() {
+        betreteMonitor();
+        ausgangAktiv--;
+        if (ausgangWartend > 0) {
+            ausgangWartend--;
+            ausgangWarten.release();
+            iws2Wartend++;
+        } else if (anfrageWartend > 0) {
+            int zuWecken = anfrageWartend;
+            if (zuWecken > 5) zuWecken = 5;
+            for (int i = 0; i < zuWecken; i++) {
+                anfrageWartend--;
+                anfrageWarten.release();
+                iws2Wartend++;
+            }
+        } else if (eingangWartend > 0) {
+            int zuWecken = eingangWartend;
+            if (zuWecken > 3) zuWecken = 3;
+            for (int i = 0; i < zuWecken; i++) {
+                eingangWartend--;
+                eingangWarten.release();
+                iws2Wartend++;
+            }
+        }
+        belegeMonitor();
+    }
+
+    public void eingangAnfang() throws InterruptedException {
+        betreteMonitor();
+        if (ausgangAktiv > 0 || anfrageAktiv > 0 || eingangAktiv == 3 || ausgangWartend > 0 || anfrageWartend > 0) {
+            eingangWartend++;
+            belegeMonitor();
+            eingangWarten.acquire();
+            iws2.acquire();
+        }
+        eingangAktiv++;
+        belegeMonitor();
+    }
+
+    public void eingangEnde() {
+        betreteMonitor();
+        eingangAktiv--;
+        if (eingangAktiv == 0) {
+            if (ausgangWartend > 0) {
+                ausgangWartend--;
+                ausgangWarten.release();
+                iws2Wartend++;
+            } else if (anfrageWartend > 0) {
+                int zuWecken = anfrageWartend;
+                if (zuWecken > 5) zuWecken = 5;
+                for (int i = 0; i < zuWecken; i++) {
+                    anfrageWartend--;
+                    anfrageWarten.release();
+                    iws2Wartend++;
+                }
+            } else if (eingangWartend > 0) {
+                int zuWecken = eingangWartend;
+                if (zuWecken > 3) zuWecken = 3;
+                for (int i = 0; i < zuWecken; i++) {
+                    eingangWartend--;
+                    eingangWarten.release();
+                    iws2Wartend++;
+                }
+            }
+        } else {
+            if (eingangWartend > 0 && ausgangWartend == 0 && anfrageWartend == 0) {
+                eingangWartend--;
+                eingangWarten.release();
+                iws2Wartend++;
+            }
+        }
+        belegeMonitor();
+    }
 
 
 }
