@@ -26,9 +26,8 @@ public class Monitor {
     // prüft ob er darf und  verhindert dass anderer rein darf
     private void betreteMonitor() {
         try {
-        iws1.acquire();
-        }
-        catch (InterruptedException e) {
+            iws1.acquire();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -38,9 +37,18 @@ public class Monitor {
     // eine Zeile mit den variablen wie viele wartend sind
     // und das zu begin von belege Monitor
     private void belegeMonitor() {
-        System.out.println("Aktiv:  Ausgänge: " + ausgangAktiv + " Eingänge: " + eingangAktiv + " Anfragen: " + anfrageAktiv);
-        System.out.println("Wartend: Ausgänge: " + ausgangWartend + " Eingänge: " + eingangWartend + " Anfragen: " + anfrageWartend);
-        if(iws2Wartend > 0) {
+
+        String status = String.format(
+                "Aktiv:   Ausgänge: %d | Eingänge: %d | Anfragen: %d\n" +
+                "Wartend: Ausgänge: %d | Eingänge: %d | Anfragen: %d\n" +
+                "------------------------------------------------",
+                ausgangAktiv, eingangAktiv, anfrageAktiv,
+                ausgangWartend, eingangWartend, anfrageWartend
+        );
+
+        System.out.println(status);
+
+        if (iws2Wartend > 0) {
             // hat vorrang
             iws2Wartend--;
             iws2.release();
@@ -76,7 +84,7 @@ public class Monitor {
                 // die 3 sachen sind wecken -> öfter gebraucht
             } else if (eingangWartend > 0) {
                 int zuWecken = eingangWartend;
-                if (zuWecken > 3 ) zuWecken = 3;
+                if (zuWecken > 3) zuWecken = 3;
                 for (int i = 0; i < zuWecken; i++) {
                     eingangWartend--;
                     eingangWarten.release();
@@ -84,10 +92,10 @@ public class Monitor {
                 }
             }
         } else if (anfrageWartend > 0 && ausgangWartend == 0) {
-                // anfrage starten gkeiches Schema
-                anfrageWartend--;
-                anfrageWarten.release();
-                iws2Wartend++;
+            // anfrage starten gkeiches Schema
+            anfrageWartend--;
+            anfrageWarten.release();
+            iws2Wartend++;
 
         }
         belegeMonitor();
